@@ -1,1 +1,1 @@
-Everytime the GnuCash saves, his file is copied to the dropbox directory to be backed up.
+Everytime GnuCash saves, the '.gnu' file is copied to the dropbox directory to be backed up.
