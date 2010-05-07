@@ -24,7 +24,6 @@ class DropCopyGTK:
 		self._build_window()
 		self._build_gnucash_file_chooser()
 		self._build_dropbox_file_chooser()
-		self._build_separator()
 		self._build_save_button()
 		self._build_cancel_button()
 		self._main_window.add(self._fixed_container)
@@ -36,10 +35,6 @@ class DropCopyGTK:
 		self._main_window.set_border_width(10)
 		self._main_window.set_title('DropCopy')
 		self._main_window.connect('destroy', self._destroy)
-	
-	def _build_separator(self):
-		separator = gtk.HSeparator()
-		self._fixed_container.put(separator, 40, 100)
 
 	def _build_gnucash_file_chooser(self):
 		gnucash_label = gtk.Label('GnuCash file:')
