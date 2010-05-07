@@ -76,15 +76,12 @@ class DropCopyGTK:
 		if gnu_cash_file != None:
 			print 'Saved! GnuCash file: ' + gnu_cash_file + ' and Dropbox folder: ' + dropbox_folder
 		else:
-			self._build_and_show_error_dialog()
+			self._show_error_dialog('You have to choose a GnuCash file.')
 
-	def _build_and_show_error_dialog(self):
-		error_message = 'You have to choose a GnuCash file'
-		must_select_file_dialog = gtk.Dialog(title='Error', parent=self._main_window, flags=gtk.DIALOG_MODAL)
-		ok_error_dialog = must_select_file_dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-		#ok_error_dialog.connect('clicked', must_select_file_dialog.destroy)
-		#must_select_file_dialog.put(error_message, 1, 1)
-		must_select_file_dialog.show()
+	def _show_error_dialog(self, error_message):
+		error_dialog = gtk.MessageDialog(self._main_window, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE, error_message)
+		error_dialog.run()
+		error_dialog.destroy()
 
 	def _destroy(self, widget, data=None):
 		gtk.main_quit()
