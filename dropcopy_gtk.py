@@ -1,8 +1,10 @@
-import pygtk
+# User Interface using GTK+
+
 import gtk
 import os
+import dropcopy_config
 
-class DropCopyGTK:
+class DropcopyGTK:
 	
 	# Main window properties
 	_WINDOW_HEIGHT = 300
@@ -69,12 +71,14 @@ class DropCopyGTK:
 		gnu_cash_file = self._gnucash_file_chooser.get_filename()
 		dropbox_folder = self._dropbox_file_chooser.get_filename()
 		if gnu_cash_file != None:
-			print 'Saved! GnuCash file: ' + gnu_cash_file + ' and Dropbox folder: ' + dropbox_folder
+			config = dropcopy_config.DropcopyConfig()
+			config.save_preferences(gnu_cash_file, dropbox_folder)
+			self._show_dialog('Preferences saved.', gtk.MESSAGE_INFO)
 		else:
-			self._show_error_dialog('You have to choose a GnuCash file.')
+			self._show_dialog('You have to choose a GnuCash file.', gtk.MESSAGE_ERROR)
 
-	def _show_error_dialog(self, error_message):
-		error_dialog = gtk.MessageDialog(self._main_window, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE, error_message)
+	def _show_dialog(self, error_message, message_type):
+		error_dialog = gtk.MessageDialog(self._main_window, gtk.DIALOG_DESTROY_WITH_PARENT, message_type, gtk.BUTTONS_CLOSE, error_message)
 		error_dialog.run()
 		error_dialog.destroy()
 
@@ -85,6 +89,6 @@ class DropCopyGTK:
 		gtk.main()
 
 if __name__ == "__main__":
-	hello = DropCopyGTK()
+	hello = DropcopyGTK()
 	hello.main()
-	
+
