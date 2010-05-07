@@ -91,4 +91,3 @@ class DropcopyGTK:
 if __name__ == "__main__":
 	hello = DropcopyGTK()
 	hello.main()
-
