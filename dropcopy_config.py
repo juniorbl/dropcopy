@@ -13,3 +13,8 @@ class DropcopyConfig:
 		preferences.set('DEFAULT', 'dropboxfolder',  dropbox_folder)
 		with open(self._CONFIG_FILE, 'w') as config_file:
 			preferences.write(config_file)
+
+	def get_preference(self, preference_name):
+		preferences = ConfigParser.RawConfigParser()
+		preferences.read(self._CONFIG_FILE)
+		return preferences.get('DEFAULT', preference_name)
