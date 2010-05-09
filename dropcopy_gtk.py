@@ -1,6 +1,7 @@
 # User Interface using GTK+
 
 import gtk
+import pynotify
 import os
 import dropcopy_config
 
@@ -84,8 +85,19 @@ class DropcopyGTK:
 
 	def _destroy(self, widget, data=None):
 		gtk.main_quit()
+		
+	def _build_system_tray(self):
+		self.tray = gtk.StatusIcon()
+		self.tray.set_from_icon_name(gtk.STOCK_NETWORK)
+		self.tray.set_visible(True)
+
+	def show_notification(self, message):
+		pynotify.init('Dropcopy')
+		notification = pynotify.Notification('Dropcopy', message)
+		notification.show()
 
 	def main(self):
+		self._build_system_tray()
 		gtk.main()
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@
 
 import pyinotify
 import shutil
+import dropcopy_gtk
 
 class DropcopyCore(pyinotify.ProcessEvent):
 	
@@ -16,4 +17,8 @@ class DropcopyCore(pyinotify.ProcessEvent):
 	def process_IN_CREATE(self, event):
 		if event.name == self._gnucash_file:
 			shutil.copy(event.pathname, self._dropbox_folder + event.name)
-			print "Your GnuCash file was copied to", self._dropbox_folder
+			self._inform_success()
+
+	def _inform_success(self):
+		gtk = dropcopy_gtk.DropcopyGTK()
+		gtk.show_notification('GnuCash file was copied to your local dropbox folder')
