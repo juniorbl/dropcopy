@@ -69,7 +69,7 @@ class DropcopyGTK:
 
 	def _save_dirs(self, widget, data=None):
 		gnu_cash_file = self._gnucash_file_chooser.get_filename()
-		dropbox_folder = self._dropbox_file_chooser.get_filename()
+		dropbox_folder = self._dropbox_file_chooser.get_filename() + os.sep
 		if gnu_cash_file != None:
 			config = dropcopy_config.DropcopyConfig()
 			config.save_preferences(gnu_cash_file, dropbox_folder)
@@ -89,5 +89,5 @@ class DropcopyGTK:
 		gtk.main()
 
 if __name__ == "__main__":
-	hello = DropcopyGTK()
-	hello.main()
+	dropcopy_gtk = DropcopyGTK()
+	dropcopy_gtk.main()

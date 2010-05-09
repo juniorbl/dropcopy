@@ -1,24 +1,26 @@
-import os
+# Initial point. Loads preferences and run the application
+
+import dropcopy_core
+import dropcopy_config
 import pyinotify
-import shutil
+import os
+	
+# Preference names
+GNUCASH_PREFERENCE = 'gnucashfile'
+DROPBOX_FOLDER_PREFERENCE = 'dropboxfolder'
 
-gnucash_full_path = '/directory/gcash.gnc'
-dropbox_dir = '/directory/dropcopy/'
-gnucash_directory, gnucash_file = os.path.split(gnucash_full_path)
-
+config = dropcopy_config.DropcopyConfig()
+gnucash_full_path = config.get_preference(GNUCASH_PREFERENCE)
+dropbox_folder = config.get_preference(DROPBOX_FOLDER_PREFERENCE)
+gnucash_folder, gnucash_file = os.path.split(gnucash_full_path)
 watch_manager = pyinotify.WatchManager()
-when_saved = pyinotify.IN_CREATE
 
-class HandleEvents(pyinotify.ProcessEvent):
-		# It seems that GnuCash only saves his file.
-		def process_IN_CREATE(self, event):
-				if event.name == gnucash_file:
-						print "Your GnuCash file was saved in", event.pathname
-						shutil.copy(event.pathname, dropbox_dir + event.name)
-						print "Your GnuCash file was copied to", dropbox_dir
-        
-drop_copy = HandleEvents()
-notifier = pyinotify.Notifier(watch_manager, drop_copy)
-watch_manager.add_watch(gnucash_directory, when_saved, rec=True)
-
-notifier.loop()
+def main():
+	dropcopy = dropcopy_core.DropcopyCore(gnucash_file, dropbox_folder)
+	notifier = pyinotify.Notifier(watch_manager, dropcopy)
+	when_saved = pyinotify.IN_CREATE
+	watch_manager.add_watch(gnucash_folder, when_saved, rec=True)
+	notifier.loop()
+		
+if __name__ == "__main__":
+	main()
