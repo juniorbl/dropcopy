@@ -1,0 +1,7 @@
+README.txt
+setup.py
+dropcopy.conf
+dropcopy/dropcopy.py
+dropcopy/dropcopy_config.py
+dropcopy/dropcopy_core.py
+dropcopy/dropcopy_gtk.py
