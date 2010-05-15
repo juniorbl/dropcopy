@@ -19,6 +19,7 @@ class DropcopyGTK:
 	# Main window and container
 	_main_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 	_fixed_container = gtk.Fixed()
+	_main_window.add(_fixed_container)
 	
 	_gnucash_file_chooser = None
 	_dropbox_file_chooser = None
@@ -29,7 +30,6 @@ class DropcopyGTK:
 		self._build_dropbox_file_chooser()
 		self._build_save_button()
 		self._build_cancel_button()
-		self._main_window.add(self._fixed_container)
 		self._main_window.show_all()
 
 	def _build_window(self):	
@@ -94,6 +94,7 @@ class DropcopyGTK:
 	def show_notification(self, message):
 		pynotify.init('Dropcopy')
 		notification = pynotify.Notification('Dropcopy', message)
+		notification.set_timeout(3000)
 		notification.show()
 
 	def main(self):
