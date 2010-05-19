@@ -16,6 +16,11 @@ class DropcopyGTK:
 	_BUTTON_WIDTH = 80
 	_FILE_CHOOSER_WIDTH = 16
 	
+	# Icons
+	_WINDOW_ICON = 'icons/16x16/dropcopy-logo.png'
+	_TRAY_ICON = 'icons/32x32/dropcopy-logo.png'
+	_NOTIFICATION_ICON = 'icons/48x48/dropcopy-logo.png'
+	
 	# Main window and container
 	_main_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 	_fixed_container = gtk.Fixed()
@@ -38,6 +43,7 @@ class DropcopyGTK:
 		self._main_window.set_border_width(10)
 		self._main_window.set_title('DropCopy')
 		self._main_window.connect('destroy', self._destroy)
+		self._main_window.set_icon_from_file(self._WINDOW_ICON)
 
 	def _build_gnucash_file_chooser(self):
 		gnucash_label = gtk.Label('GnuCash file:')
@@ -89,11 +95,13 @@ class DropcopyGTK:
 	def _build_system_tray(self):
 		self.tray = gtk.StatusIcon()
 		self.tray.set_from_icon_name(gtk.STOCK_NETWORK)
+		self.tray.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(self._TRAY_ICON))
 		self.tray.set_visible(True)
 
 	def show_notification(self, message):
 		pynotify.init('Dropcopy')
 		notification = pynotify.Notification('Dropcopy', message)
+		notification.set_icon_from_pixbuf(gtk.gdk.pixbuf_new_from_file(self._NOTIFICATION_ICON))
 		notification.set_timeout(3000)
 		notification.show()
 
