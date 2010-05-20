@@ -24,12 +24,12 @@ class Dropcopy(pyinotify.ProcessEvent):
 	watch_manager = pyinotify.WatchManager()
 	
 	def __init__(self):
-		pyinotify.ProcessEvent.__init__(self)
 		self.notifier = pyinotify.ThreadedNotifier(self.watch_manager, self)
 		when_saved = pyinotify.IN_CREATE
 		self.watch_manager.add_watch(self.gnucash_folder, when_saved, rec=True)
 		self.notifier.start()
 		self.dpGTK.main()
+		self.notifier.stop()
 
 	# It seems that GnuCash only saves its file, it doesn't update
 	def process_IN_CREATE(self, event):
