@@ -1,9 +1,9 @@
 # User Interface using GTK+
 
+import dropcopy_config
 import gtk
 import pynotify
 import os
-import dropcopy_config
 
 class DropcopyGTK:
 	
@@ -30,12 +30,12 @@ class DropcopyGTK:
 	_dropbox_file_chooser = None
 	
 	def __init__(self):
+		self._build_system_tray()
 		self._build_window()
 		self._build_gnucash_file_chooser()
 		self._build_dropbox_file_chooser()
 		self._build_save_button()
 		self._build_cancel_button()
-		self._main_window.show_all()
 
 	def _build_window(self):	
 		self._main_window.set_resizable(False)
@@ -71,7 +71,7 @@ class DropcopyGTK:
 	def _build_cancel_button(self):
 		cancel_button = gtk.Button('Cancel')
 		cancel_button.set_size_request(self._BUTTON_WIDTH, self._BUTTON_HEIGHT)
-		cancel_button.connect('clicked', self._destroy)
+		cancel_button.connect('clicked', self._hide_preferences)
 		self._fixed_container.put(cancel_button, 150, 80)
 
 	def _save_dirs(self, widget, data=None):
@@ -81,6 +81,7 @@ class DropcopyGTK:
 			config = dropcopy_config.DropcopyConfig()
 			config.save_preferences(gnu_cash_file, dropbox_folder)
 			self._show_dialog('Preferences saved.', gtk.MESSAGE_INFO)
+			self._hide_preferences()
 		else:
 			self._show_dialog('You have to choose a GnuCash file.', gtk.MESSAGE_ERROR)
 
@@ -89,14 +90,33 @@ class DropcopyGTK:
 		error_dialog.run()
 		error_dialog.destroy()
 
-	def _destroy(self, widget, data=None):
+	def _destroy(self, widget):
 		gtk.main_quit()
 		
 	def _build_system_tray(self):
 		self.tray = gtk.StatusIcon()
 		self.tray.set_from_icon_name(gtk.STOCK_NETWORK)
 		self.tray.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(self._TRAY_ICON))
+		self.tray.connect('popup-menu', self._show_menu)
 		self.tray.set_visible(True)
+
+	def _show_menu(self, data, event_button, event_time):
+		menu = gtk.Menu()
+		preferences_item = gtk.MenuItem('Preferences')
+		exit_item = gtk.MenuItem('Exit')
+		menu.append(preferences_item)
+		menu.append(exit_item)
+		preferences_item.connect_object('activate', self._show_preferences, 'Preferences')
+		preferences_item.show()
+		exit_item.connect_object('activate', self._destroy, 'Exit')
+		exit_item.show()
+		menu.popup(None, None, None, event_button, event_time)
+
+	def _show_preferences(self, data=None):
+		self._main_window.show_all()
+
+	def _hide_preferences(self, data=None):
+		self._main_window.hide()
 
 	def show_notification(self, message):
 		pynotify.init('Dropcopy')
@@ -106,9 +126,5 @@ class DropcopyGTK:
 		notification.show()
 
 	def main(self):
-		self._build_system_tray()
 		gtk.main()
 
-if __name__ == "__main__":
-	dropcopy_gtk = DropcopyGTK()
-	dropcopy_gtk.main()
