@@ -103,7 +103,7 @@ class Dropcopy(pyinotify.ProcessEvent):
 	def _build_save_button(self):
 		save_button = gtk.Button('Save')
 		save_button.set_size_request(self._BUTTON_WIDTH, self._BUTTON_HEIGHT)
-		save_button.connect('clicked', self._save_dirs)
+		save_button.connect('clicked', self._save_preferences)
 		self._fixed_container.put(save_button, 50, 80)
 
 	def _build_cancel_button(self):
@@ -112,7 +112,7 @@ class Dropcopy(pyinotify.ProcessEvent):
 		cancel_button.connect('clicked', self._hide_preferences)
 		self._fixed_container.put(cancel_button, 150, 80)
 
-	def _save_dirs(self, widget, data=None):
+	def _save_preferences(self, widget, data=None):
 		gnu_cash_file = self._gnucash_file_chooser.get_filename()
 		dropbox_folder = self._dropbox_file_chooser.get_filename() + os.sep
 		if gnu_cash_file != None:
