@@ -1,7 +1,11 @@
 README.txt
-setup.py
+LICENSE.txt
 dropcopy.conf
+setup.py
+dropcopy.desktop
+dropcopy-run.py
 dropcopy/dropcopy.py
 dropcopy/dropcopy_config.py
-dropcopy/dropcopy_core.py
-dropcopy/dropcopy_gtk.py
+icons/16x16/dropcopy-logo.png
+icons/22x22/dropcopy-logo.png
+icons/48x48/dropcopy-logo.png

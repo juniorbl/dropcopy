@@ -6,8 +6,6 @@ import gobject
 import gtk
 import os
 
-gobject.threads_init()
-
 class Dropcopy(pyinotify.ProcessEvent):
 	
 	# Main window properties
@@ -21,7 +19,7 @@ class Dropcopy(pyinotify.ProcessEvent):
 	
 	# Icons
 	_WINDOW_ICON = 'icons/16x16/dropcopy-logo.png'
-	_TRAY_ICON = 'icons/32x32/dropcopy-logo.png'
+	_TRAY_ICON = 'icons/22x22/dropcopy-logo.png'
 	_NOTIFICATION_ICON = 'icons/48x48/dropcopy-logo.png'
 	
 	# Main window and container
@@ -163,6 +161,3 @@ class Dropcopy(pyinotify.ProcessEvent):
 		notification.set_icon_from_pixbuf(gtk.gdk.pixbuf_new_from_file(self._NOTIFICATION_ICON))
 		notification.set_timeout(3000)
 		notification.show()
-
-if __name__ == "__main__":
-	Dropcopy()

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Name=Dropcopy
+Comment=Copies GnuCash file to dropbox folder
+Icon=dropcopy-logo
+Exec=dropcopy-run.py
+Categories=GNOME;GTK;Application;
