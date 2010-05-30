@@ -17,10 +17,8 @@ class Dropcopy(pyinotify.ProcessEvent):
 	_BUTTON_WIDTH = 80
 	_FILE_CHOOSER_WIDTH = 16
 	
-	# Icons
-	_WINDOW_ICON = 'icons/16x16/dropcopy-logo.png'
-	_TRAY_ICON = 'icons/22x22/dropcopy-logo.png'
-	_NOTIFICATION_ICON = 'icons/48x48/dropcopy-logo.png'
+	# Icon
+	_icon_name = None
 	
 	# Main window and container
 	_main_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -39,6 +37,7 @@ class Dropcopy(pyinotify.ProcessEvent):
 	_gnucash_file = None
 
 	def __init__(self):
+		self._load_icons()
 		self._build_system_tray()
 		self._build_window()
 		self._build_gnucash_file_chooser()
@@ -48,6 +47,16 @@ class Dropcopy(pyinotify.ProcessEvent):
 		self._start_monitor()
 		gtk.main()
 		self.notifier.stop()
+
+	def _load_icons(self):
+		icon_name = 'dropcopy-logo'
+		theme = gtk.icon_theme_get_default()
+		if not theme.has_icon(icon_name):
+			theme.prepend_search_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "icons"))
+		if theme.has_icon(icon_name):
+			self._icon_name = icon_name
+		else:
+			self._icon_name = gtk.STOCK_NETWORK
 	
 	def _start_monitor(self):
 		self._load_configuration()
@@ -79,7 +88,7 @@ class Dropcopy(pyinotify.ProcessEvent):
 		self._main_window.set_border_width(10)
 		self._main_window.set_title('DropCopy')
 		self._main_window.connect('destroy', self._destroy)
-		self._main_window.set_icon_from_file(self._WINDOW_ICON)
+		self._main_window.set_icon_name(self._icon_name)
 
 	def _build_gnucash_file_chooser(self):
 		gnucash_label = gtk.Label('GnuCash file:')
@@ -132,8 +141,7 @@ class Dropcopy(pyinotify.ProcessEvent):
 		
 	def _build_system_tray(self):
 		self.tray = gtk.StatusIcon()
-		self.tray.set_from_icon_name(gtk.STOCK_NETWORK)
-		self.tray.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(self._TRAY_ICON))
+		self.tray.set_from_icon_name(self._icon_name)
 		self.tray.connect('popup-menu', self._show_menu)
 		self.tray.set_visible(True)
 
@@ -158,6 +166,10 @@ class Dropcopy(pyinotify.ProcessEvent):
 	def _show_notification(self, message):
 		pynotify.init('Dropcopy')
 		notification = pynotify.Notification('Dropcopy', message)
-		notification.set_icon_from_pixbuf(gtk.gdk.pixbuf_new_from_file(self._NOTIFICATION_ICON))
+		#notification.set_icon_from_pixbuf(gtk.gdk.pixbuf_new_from_file(self._icon_name))
 		notification.set_timeout(3000)
 		notification.show()
+		
+if __name__ == "__main__":
+	gobject.threads_init()
+	Dropcopy()

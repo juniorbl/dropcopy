@@ -1,11 +1,11 @@
 README.txt
 LICENSE.txt
-dropcopy.conf
 setup.py
 dropcopy.desktop
 dropcopy-run.py
+dropcopy.conf
 dropcopy/dropcopy.py
 dropcopy/dropcopy_config.py
-icons/16x16/dropcopy-logo.png
-icons/22x22/dropcopy-logo.png
-icons/48x48/dropcopy-logo.png
+icons/hicolor/16x16/apps/dropcopy-logo.png
+icons/hicolor/22x22/apps/dropcopy-logo.png
+icons/hicolor/48x48/apps/dropcopy-logo.png

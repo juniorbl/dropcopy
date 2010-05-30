@@ -12,7 +12,7 @@ setup (
 	license='MIT License',
 	data_files=[
 		('share/applications', ['dropcopy.desktop']),
-		('usr/share/icons/hicolor/16x16/apps', ['icons/16x16/dropcopy-logo.png']),
-		('usr/share/icons/hicolor/22x22/apps', ['icons/22x22/dropcopy-logo.png']),
-		('usr/share/icons/hicolor/48x48/apps', ['icons/48x48/dropcopy-logo.png'])]
+		('usr/share/icons/hicolor/16x16/apps', ['icons/hicolor/16x16/apps/dropcopy-logo.png']),
+		('usr/share/icons/hicolor/22x22/apps', ['icons/hicolor/22x22/apps/dropcopy-logo.png']),
+		('usr/share/icons/hicolor/48x48/apps', ['icons/hicolor/48x48/apps/dropcopy-logo.png'])]
 )
