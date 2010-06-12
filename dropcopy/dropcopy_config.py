@@ -5,7 +5,8 @@ import ConfigParser
 
 class DropcopyConfig:
 	
-	_CONFIG_FILE = "dropcopy.conf"
+	# User home directory
+	_CONFIG_FILE = os.path.expanduser('~') + "/.dropcopy/dropcopy.conf"
 	
 	def save_preferences(self, gnu_cash_file, dropbox_folder):
 		preferences = ConfigParser.RawConfigParser()
