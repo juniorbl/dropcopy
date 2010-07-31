@@ -52,7 +52,7 @@ class Dropcopy(pyinotify.ProcessEvent):
 		icon_name = 'dropcopy-logo'
 		theme = gtk.icon_theme_get_default()
 		if not theme.has_icon(icon_name):
-			theme.prepend_search_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "icons"))
+			theme.prepend_search_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".", "icons"))
 		if theme.has_icon(icon_name):
 			self._icon_name = icon_name
 		else:

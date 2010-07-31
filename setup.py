@@ -8,12 +8,7 @@ setup (
 	author_email='juniorbl@gmail.com',
 	url='http://github.com/juniorbl/dropcopy',
 	scripts=["dropcopy-run.py"],
-	packages=['dropcopy'],
 	license='MIT License',
-	data_files=[
-		('share/applications', ['dropcopy.desktop']),
-		('/home/junior/.dropcopy', ['dropcopy.conf']),
-		('usr/share/icons/hicolor/16x16/apps', ['icons/hicolor/16x16/apps/dropcopy-logo.png']),
-		('usr/share/icons/hicolor/22x22/apps', ['icons/hicolor/22x22/apps/dropcopy-logo.png']),
-		('usr/share/icons/hicolor/48x48/apps', ['icons/hicolor/48x48/apps/dropcopy-logo.png'])]
+	packages=['dropcopy'],
+	package_data={'dropcopy':['icons/*.png']},
 )
